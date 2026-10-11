@@ -1,0 +1,92 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Primitive validation helpers
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    // Health check endpoint for Firestore online testing
+    match /test/{testId} {
+      allow get: if isValidId(testId);
+      allow list, write: if false;
+    }
+
+    // Standalone Validation Blueprint for Order
+    function isValidOrder(data) {
+      return data.keys().hasAll([
+        'customerName',
+        'phone',
+        'country',
+        'city',
+        'shippingAddress',
+        'productName',
+        'quantity',
+        'unitPrice',
+        'totalAmount',
+        'currency',
+        'status',
+        'createdAt'
+      ]) &&
+      data.keys().hasOnly([
+        'customerName',
+        'phone',
+        'country',
+        'city',
+        'shippingAddress',
+        'productName',
+        'quantity',
+        'unitPrice',
+        'totalAmount',
+        'currency',
+        'status',
+        'createdAt'
+      ]) &&
+      data.customerName is string &&
+      data.customerName.size() >= 2 &&
+      data.customerName.size() <= 100 &&
+      data.phone is string &&
+      data.phone.size() >= 6 &&
+      data.phone.size() <= 30 &&
+      data.country is string &&
+      data.country.size() >= 2 &&
+      data.country.size() <= 60 &&
+      data.city is string &&
+      data.city.size() >= 2 &&
+      data.city.size() <= 80 &&
+      data.shippingAddress is string &&
+      data.shippingAddress.size() >= 5 &&
+      data.shippingAddress.size() <= 200 &&
+      (data.productName == 'Cubes interactifs' || data.productName == 'FlipMotion') &&
+      data.quantity is int &&
+      data.quantity >= 1 &&
+      data.quantity <= 20 &&
+      data.unitPrice is number &&
+      data.unitPrice >= 0 &&
+      data.totalAmount is number &&
+      data.totalAmount > 0 &&
+      data.currency == 'EUR' &&
+      data.status == 'En attente' &&
+      data.createdAt == request.time;
+    }
+
+    // Order collection
+    match /orders/{orderId} {
+      // Unauthenticated customers can create valid orders
+      allow create: if isValidId(orderId) && isValidOrder(incoming());
+
+      // Immutable and private: no client listing, modification, or deletion
+      allow read, update, delete: if false;
+    }
+  }
+}

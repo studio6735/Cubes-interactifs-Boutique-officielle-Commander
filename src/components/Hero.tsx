@@ -1,0 +1,87 @@
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+import React from 'react';
+import { Check, ShieldCheck, Truck } from 'lucide-react';
+import cubesHeroImg from '../assets/images/cubes_hero_1791703391127.jpg';
+import { PRODUCT_INFO } from '../lib/firebase';
+
+interface HeroProps {
+  onOrderClick: () => void;
+}
+
+export const Hero: React.FC<HeroProps> = ({ onOrderClick }) => {
+  return (
+    <section className="pt-8 pb-12 sm:pt-12 sm:pb-16 bg-[#faf9f6]">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          
+          {/* Main Photo of Interactive Cubes */}
+          <div className="lg:col-span-7">
+            <div className="rounded-xl overflow-hidden border border-stone-200 bg-white shadow-sm">
+              <img
+                src={cubesHeroImg}
+                alt="Trois cubes interactifs avec écrans couleur côte à côte sur une table"
+                className="w-full h-auto object-cover"
+              />
+            </div>
+          </div>
+
+          {/* Product Description & Order CTA */}
+          <div className="lg:col-span-5 space-y-5 text-left">
+            <div>
+              <span className="text-xs uppercase tracking-wider font-semibold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200/60 inline-block mb-3">
+                Jeu interactif tactile
+              </span>
+              <h1 className="text-2xl sm:text-3xl font-bold text-stone-900 tracking-tight leading-snug">
+                Cubes interactifs avec écrans
+              </h1>
+            </div>
+
+            <p className="text-sm sm:text-base text-stone-600 leading-relaxed">
+              Un jeu composé de petits blocs cubiques intelligents équipés d’écrans couleur intégrés. En les assemblant côte à côte et en les manipulant, les cubes interagissent directement entre eux pour donner vie à des puzzles et des expériences de jeu uniques.
+            </p>
+
+            {/* Price section */}
+            <div className="p-4 rounded-lg bg-white border border-stone-200 space-y-1">
+              <div className="flex items-baseline gap-2">
+                <span className="text-2xl sm:text-3xl font-bold text-stone-900">
+                  {PRODUCT_INFO.unitPrice.toFixed(2).replace('.', ',')} {PRODUCT_INFO.symbol}
+                </span>
+                <span className="text-xs text-stone-600">TTC</span>
+              </div>
+              <div className="flex items-center gap-2 text-xs text-emerald-700 font-medium">
+                <Check className="w-3.5 h-3.5" />
+                <span>En stock • Livraison suivie offerte</span>
+              </div>
+            </div>
+
+            {/* Order Button */}
+            <button
+              onClick={onOrderClick}
+              className="cursor-pointer w-full py-3.5 px-6 rounded-lg bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-900 text-white font-semibold text-base transition-colors shadow-sm flex items-center justify-center gap-2"
+            >
+              Commander maintenant
+            </button>
+
+            {/* Simple reassurance list */}
+            <div className="pt-1 space-y-1.5 text-xs text-stone-600">
+              <div className="flex items-center gap-2">
+                <Truck className="w-3.5 h-3.5 text-stone-600" />
+                <span>Expédition rapide en 48h à 72h</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <ShieldCheck className="w-3.5 h-3.5 text-stone-600" />
+                <span>Commande directe sans création de compte</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+};

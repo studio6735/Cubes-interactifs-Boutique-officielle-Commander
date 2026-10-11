@@ -1,0 +1,6 @@
+{
+  "name": "FlipMotion - Cubes de Jeu Interactifs",
+  "description": "Boutique officielle : jeu de blocs et cubes interactifs avec écrans intégrés qui communiquent côte à côte.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

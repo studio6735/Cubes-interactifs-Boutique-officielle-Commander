@@ -1,0 +1,95 @@
+{
+  "entities": {
+    "Order": {
+      "title": "Order",
+      "description": "Represents a customer purchase order for the FlipMotion mechanical animation toy.",
+      "type": "object",
+      "properties": {
+        "customerName": {
+          "type": "string",
+          "description": "Full name of the customer placing the order.",
+          "minLength": 2,
+          "maxLength": 100
+        },
+        "phone": {
+          "type": "string",
+          "description": "Customer contact phone number for delivery updates.",
+          "minLength": 6,
+          "maxLength": 30
+        },
+        "country": {
+          "type": "string",
+          "description": "Destination country for delivery.",
+          "minLength": 2,
+          "maxLength": 60
+        },
+        "city": {
+          "type": "string",
+          "description": "Destination city for delivery.",
+          "minLength": 2,
+          "maxLength": 80
+        },
+        "shippingAddress": {
+          "type": "string",
+          "description": "Full street address for physical delivery.",
+          "minLength": 5,
+          "maxLength": 200
+        },
+        "productName": {
+          "type": "string",
+          "description": "Name of the ordered item ('Cubes interactifs').",
+          "enum": ["Cubes interactifs", "FlipMotion"]
+        },
+        "quantity": {
+          "type": "integer",
+          "description": "Number of FlipMotion units ordered (between 1 and 20)."
+        },
+        "unitPrice": {
+          "type": "number",
+          "description": "Configured fixed price per unit in Euros (29.90 €)."
+        },
+        "totalAmount": {
+          "type": "number",
+          "description": "Calculated total amount in Euros."
+        },
+        "currency": {
+          "type": "string",
+          "description": "Currency code ('EUR').",
+          "enum": ["EUR"]
+        },
+        "status": {
+          "type": "string",
+          "description": "Initial order status ('En attente').",
+          "enum": ["En attente"]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of when the order was placed."
+        }
+      },
+      "required": [
+        "customerName",
+        "phone",
+        "country",
+        "city",
+        "shippingAddress",
+        "productName",
+        "quantity",
+        "unitPrice",
+        "totalAmount",
+        "currency",
+        "status",
+        "createdAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/orders/{orderId}": {
+      "schema": {
+        "$ref": "#/entities/Order"
+      },
+      "description": "Collection storing customer orders for FlipMotion with strict validation, protected from unauthorized access or modification."
+    }
+  }
+}
