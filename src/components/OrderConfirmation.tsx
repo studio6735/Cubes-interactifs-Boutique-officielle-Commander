@@ -43,7 +43,7 @@ export const OrderConfirmation: React.FC<OrderConfirmationProps> = ({
             Commande enregistrée avec succès
           </h2>
           <p className="text-stone-600 text-sm">
-            Merci {order.customerName}. Votre commande pour les cubes interactifs a bien été reçue.
+            Merci {order.customerName}. Votre commande pour les Sifteo Cubes a bien été reçue.
           </p>
         </div>
 

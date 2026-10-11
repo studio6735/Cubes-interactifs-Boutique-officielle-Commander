@@ -23,7 +23,7 @@ export const Hero: React.FC<HeroProps> = ({ onOrderClick }) => {
             <div className="rounded-xl overflow-hidden border border-stone-200 bg-white shadow-sm">
               <img
                 src={cubesHeroImg}
-                alt="Trois cubes interactifs avec écrans couleur côte à côte sur une table"
+                alt="Trois Sifteo Cubes avec écrans couleur côte à côte sur une table"
                 className="w-full h-auto object-cover"
               />
             </div>
@@ -36,12 +36,12 @@ export const Hero: React.FC<HeroProps> = ({ onOrderClick }) => {
                 Jeu interactif tactile
               </span>
               <h1 className="text-2xl sm:text-3xl font-bold text-stone-900 tracking-tight leading-snug">
-                Cubes interactifs avec écrans
+                Sifteo Cubes – Blocs de jeu interactifs
               </h1>
             </div>
 
             <p className="text-sm sm:text-base text-stone-600 leading-relaxed">
-              Un jeu composé de petits blocs cubiques intelligents équipés d’écrans couleur intégrés. En les assemblant côte à côte et en les manipulant, les cubes interagissent directement entre eux pour donner vie à des puzzles et des expériences de jeu uniques.
+              Sifteo Cubes est un ensemble de petits blocs cubiques intelligents équipés d’écrans couleur intégrés. En les assemblant côte à côte et en les manipulant, les cubes interagissent directement entre eux pour créer des puzzles et des expériences de jeu captivantes.
             </p>
 
             {/* Price section */}

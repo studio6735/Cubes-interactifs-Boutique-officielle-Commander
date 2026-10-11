@@ -1,10 +1,10 @@
-# Security Specification for FlipMotion
+# Security Specification for Sifteo Cubes
 
 ## 1. Data Invariants
 1. Orders must contain valid customer contact details (name, phone, country, city, shipping address).
-2. Orders must strictly specify product as "FlipMotion".
+2. Orders must specify product as "Sifteo Cubes" (or backward compatible "Cubes interactifs" / "FlipMotion").
 3. Order quantity must be an integer between 1 and 20.
-4. Calculated unitPrice must be exactly 29.90 EUR, and totalAmount must equal quantity * 29.90.
+4. Calculated unitPrice is 49.90 EUR, and totalAmount must be >= 49.90 EUR.
 5. Currency must be "EUR".
 6. Status on creation must strictly be "En attente".
 7. `createdAt` must strictly be set to the server timestamp `request.time`.

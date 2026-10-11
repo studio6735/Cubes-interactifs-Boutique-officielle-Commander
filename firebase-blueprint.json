@@ -21,7 +21,7 @@
           "type": "string",
           "description": "Destination country for delivery.",
           "minLength": 2,
-          "maxLength": 60
+          "maxLength": 100
         },
         "city": {
           "type": "string",
@@ -37,16 +37,16 @@
         },
         "productName": {
           "type": "string",
-          "description": "Name of the ordered item ('Cubes interactifs').",
-          "enum": ["Cubes interactifs", "FlipMotion"]
+          "description": "Name of the ordered item ('Sifteo Cubes').",
+          "enum": ["Sifteo Cubes", "Cubes interactifs", "FlipMotion"]
         },
         "quantity": {
           "type": "integer",
-          "description": "Number of FlipMotion units ordered (between 1 and 20)."
+          "description": "Number of Sifteo Cubes units ordered (between 1 and 20)."
         },
         "unitPrice": {
           "type": "number",
-          "description": "Configured fixed price per unit in Euros (29.90 €)."
+          "description": "Configured fixed price per unit in Euros (49.90 €)."
         },
         "totalAmount": {
           "type": "number",

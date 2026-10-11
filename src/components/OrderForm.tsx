@@ -25,18 +25,33 @@ interface OrderFormProps {
 }
 
 const COUNTRIES = [
+  'Bénin',
   'France',
+  'Côte d\'Ivoire',
+  'Sénégal',
+  'Togo',
+  'Cameroun',
   'Belgique',
   'Suisse',
   'Luxembourg',
   'Canada',
-  'Autre pays européen',
+  'Burkina Faso',
+  'Mali',
+  'Niger',
+  'Guinée',
+  'Gabon',
+  'Congo',
+  'RDC',
+  'Maroc',
+  'Tunisie',
+  'Algérie',
+  'Autre pays (à préciser)',
 ];
 
 export const OrderForm: React.FC<OrderFormProps> = ({ onOrderSuccess }) => {
   const [customerName, setCustomerName] = useState('');
   const [phone, setPhone] = useState('');
-  const [country, setCountry] = useState('France');
+  const [country, setCountry] = useState('Bénin');
   const [customCountry, setCustomCountry] = useState('');
   const [city, setCity] = useState('');
   const [shippingAddress, setShippingAddress] = useState('');
@@ -60,12 +75,12 @@ export const OrderForm: React.FC<OrderFormProps> = ({ onOrderSuccess }) => {
 
     const cleanedPhone = phone.trim();
     if (!cleanedPhone || cleanedPhone.length < 6) {
-      newErrors.phone = 'Veuillez renseigner un numéro de téléphone valide pour la livraison.';
+      newErrors.phone = 'Veuillez renseigner un numéro de téléphone valide avec indicatif pays.';
     } else if (cleanedPhone.length > 30) {
       newErrors.phone = 'Le numéro est trop long (maximum 30 caractères).';
     }
 
-    const resolvedCountry = country === 'Autre pays européen' ? customCountry.trim() : country.trim();
+    const resolvedCountry = country === 'Autre pays (à préciser)' ? customCountry.trim() : country.trim();
     if (!resolvedCountry || resolvedCountry.length < 2) {
       newErrors.country = 'Veuillez préciser votre pays de livraison.';
     }
@@ -77,7 +92,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ onOrderSuccess }) => {
     }
 
     if (!shippingAddress.trim() || shippingAddress.trim().length < 5) {
-      newErrors.shippingAddress = 'Veuillez préciser votre adresse de livraison complète.';
+      newErrors.shippingAddress = 'Veuillez préciser votre adresse de livraison complète (quartier, rue, repère ou boîte postale).';
     } else if (shippingAddress.trim().length > 200) {
       newErrors.shippingAddress = "L'adresse est trop longue (maximum 200 caractères).";
     }
@@ -98,7 +113,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ onOrderSuccess }) => {
       return;
     }
 
-    const resolvedCountry = country === 'Autre pays européen' ? customCountry.trim() : country.trim();
+    const resolvedCountry = country === 'Autre pays (à préciser)' ? customCountry.trim() : country.trim();
 
     setIsSubmitting(true);
     try {
@@ -132,7 +147,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ onOrderSuccess }) => {
             Formulaire de commande
           </span>
           <h2 className="text-xl sm:text-2xl font-bold text-stone-900">
-            Finaliser votre commande – Cubes interactifs
+            Finaliser votre commande – Sifteo Cubes
           </h2>
           <p className="text-stone-600 text-xs sm:text-sm mt-1">
             Remplissez vos coordonnées de livraison ci-dessous. Aucun compte n'est requis.
@@ -168,7 +183,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ onOrderSuccess }) => {
               <input
                 id="customerName"
                 type="text"
-                placeholder="Ex. Thomas Laurent"
+                placeholder="Ex. Jean Dossou"
                 value={customerName}
                 onChange={(e) => {
                   setCustomerName(e.target.value);
@@ -188,12 +203,12 @@ export const OrderForm: React.FC<OrderFormProps> = ({ onOrderSuccess }) => {
 
             <div>
               <label htmlFor="phone" className="block text-xs font-medium text-stone-700 mb-1.5">
-                Numéro de téléphone <span className="text-red-500">*</span>
+                Téléphone (avec indicatif) <span className="text-red-500">*</span>
               </label>
               <input
                 id="phone"
                 type="tel"
-                placeholder="Ex. 06 12 34 56 78"
+                placeholder="Ex. +229 97 00 00 00 ou +33 6 12 34 56 78"
                 value={phone}
                 onChange={(e) => {
                   setPhone(e.target.value);
@@ -204,6 +219,9 @@ export const OrderForm: React.FC<OrderFormProps> = ({ onOrderSuccess }) => {
                   errors.phone ? 'border-red-400 ring-1 ring-red-400 bg-red-50/20' : 'border-stone-300 focus:border-emerald-600'
                 } text-stone-900 placeholder-stone-400 focus:outline-none focus:bg-white text-sm transition-colors`}
               />
+              <span className="text-[11px] text-stone-500 block mt-1">
+                Indicatif pays (ex : +229 Bénin, +225 Côte d'Ivoire, +33 France...)
+              </span>
               {errors.phone && (
                 <p className="text-xs text-red-600 mt-1 flex items-center gap-1">
                   <AlertCircle className="w-3.5 h-3.5" /> {errors.phone}
@@ -234,7 +252,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ onOrderSuccess }) => {
                   </option>
                 ))}
               </select>
-              {country === 'Autre pays européen' && (
+              {country === 'Autre pays (à préciser)' && (
                 <input
                   type="text"
                   placeholder="Précisez votre pays"
@@ -258,7 +276,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ onOrderSuccess }) => {
               <input
                 id="city"
                 type="text"
-                placeholder="Ex. Nantes, Bruxelles..."
+                placeholder="Ex. Cotonou, Paris, Abidjan..."
                 value={city}
                 onChange={(e) => {
                   setCity(e.target.value);

@@ -101,13 +101,13 @@ export interface SubmittedOrder extends OrderInput {
 }
 
 export const PRODUCT_INFO = {
-  name: 'Cubes interactifs',
-  subtitle: 'Cubes de jeu interactifs avec écrans',
+  name: 'Sifteo Cubes',
+  subtitle: 'Blocs de jeu interactifs avec écrans',
   unitPrice: 49.90,
   currency: 'EUR',
   symbol: '€',
   stockStatus: 'En stock',
-  deliveryDelay: 'Livraison 48h - 72h',
+  deliveryDelay: 'Expédition sous 48h - 72h',
   shippingFee: 0, // Offerte
 };
 
@@ -131,7 +131,7 @@ export async function submitOrder(input: OrderInput): Promise<SubmittedOrder> {
     country: input.country.trim(),
     city: input.city.trim(),
     shippingAddress: input.shippingAddress.trim(),
-    productName: 'Cubes interactifs',
+    productName: 'Sifteo Cubes',
     quantity,
     unitPrice: PRODUCT_INFO.unitPrice,
     totalAmount,

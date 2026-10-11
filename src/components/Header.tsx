@@ -16,10 +16,10 @@ export const Header: React.FC<HeaderProps> = ({ onOrderClick }) => {
         {/* Simple Brand Name */}
         <div className="flex items-center gap-2">
           <span className="text-xl font-bold tracking-tight text-stone-900">
-            Cubes interactifs
+            Sifteo Cubes
           </span>
           <span className="text-xs text-stone-600 bg-stone-100 border border-stone-200 px-2 py-0.5 rounded">
-            Boutique officielle
+            Blocs interactifs
           </span>
         </div>
 

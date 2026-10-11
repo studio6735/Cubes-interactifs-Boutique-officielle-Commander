@@ -60,21 +60,21 @@ service cloud.firestore {
       data.phone.size() <= 30 &&
       data.country is string &&
       data.country.size() >= 2 &&
-      data.country.size() <= 60 &&
+      data.country.size() <= 100 &&
       data.city is string &&
       data.city.size() >= 2 &&
       data.city.size() <= 80 &&
       data.shippingAddress is string &&
       data.shippingAddress.size() >= 5 &&
       data.shippingAddress.size() <= 200 &&
-      (data.productName == 'Cubes interactifs' || data.productName == 'FlipMotion') &&
+      (data.productName == 'Sifteo Cubes' || data.productName == 'Cubes interactifs' || data.productName == 'FlipMotion') &&
       data.quantity is int &&
       data.quantity >= 1 &&
       data.quantity <= 20 &&
       data.unitPrice is number &&
-      data.unitPrice >= 0 &&
+      data.unitPrice == 49.90 &&
       data.totalAmount is number &&
-      data.totalAmount > 0 &&
+      data.totalAmount >= 49.90 &&
       data.currency == 'EUR' &&
       data.status == 'En attente' &&
       data.createdAt == request.time;

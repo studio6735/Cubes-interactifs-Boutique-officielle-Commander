@@ -22,7 +22,7 @@ export const Features: React.FC<FeaturesProps> = ({ onOrderClick }) => {
             Comment fonctionne le jeu ?
           </h2>
           <p className="text-sm sm:text-base text-stone-600 mt-2 leading-relaxed">
-            Ces cubes interactifs réunissent la manipulation physique de blocs et des mini-écrans couleur qui communiquent entre eux.
+            Sifteo Cubes réunit la manipulation physique de blocs et des mini-écrans couleur qui communiquent entre eux.
           </p>
         </div>
 
@@ -34,7 +34,7 @@ export const Features: React.FC<FeaturesProps> = ({ onOrderClick }) => {
             <div className="rounded-xl overflow-hidden border border-stone-200 bg-stone-50 shadow-sm">
               <img
                 src={cubesInHandImg}
-                alt="Deux mains manipulant deux cubes interactifs en les mettant en contact bord à bord"
+                alt="Deux mains manipulant deux Sifteo Cubes en les mettant en contact bord à bord"
                 className="w-full h-auto object-cover"
               />
               <div className="p-3 bg-stone-50 border-t border-stone-200 text-xs text-stone-600 text-center">
