@@ -5,7 +5,7 @@
 
 import React from 'react';
 import { Check, ShieldCheck, Truck } from 'lucide-react';
-import cubesHeroImg from '../assets/images/cubes_hero_1791703391127.jpg';
+import cubesHeroImg from '../assets/images/sifteo_cubes_hero.png';
 import { PRODUCT_INFO } from '../lib/firebase';
 
 interface HeroProps {

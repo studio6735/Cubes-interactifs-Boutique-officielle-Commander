@@ -5,7 +5,7 @@
 
 import React from 'react';
 import { Smartphone, Layers, Move, Sparkles } from 'lucide-react';
-import cubesInHandImg from '../assets/images/cubes_in_hand_1791703410371.jpg';
+import cubesInHandImg from '../assets/images/sifteo_cubes_in_hand.png';
 
 interface FeaturesProps {
   onOrderClick: () => void;
