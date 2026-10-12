@@ -56,8 +56,12 @@ export default function App() {
 
       {/* Contenu principal */}
       <main className="flex-1">
-        {/* Grande photo réelle des cubes, présentation, CTA */}
-        <Hero onOrderClick={scrollToOrder} />
+        {/* Grande photo réelle des cubes, présentation, personnalisation et CTA */}
+        <Hero
+          onOrderClick={scrollToOrder}
+          extraCubes={extraCubes}
+          onExtraCubesChange={setExtraCubes}
+        />
 
         {/* Photos en fonctionnement & explication du principe du jeu */}
         <Features onOrderClick={scrollToOrder} />
