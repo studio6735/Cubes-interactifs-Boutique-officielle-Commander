@@ -72,19 +72,25 @@ export const OrderConfirmation: React.FC<OrderConfirmationProps> = ({
             </span>
             <div className="flex justify-between">
               <span className="font-medium text-stone-900">{order.productName}</span>
-              <span className="font-semibold text-stone-700">× {order.quantity}</span>
+              <span className="font-semibold text-stone-700">{order.totalCubes} cubes</span>
             </div>
             <div className="flex justify-between text-xs text-stone-600">
-              <span>Prix unitaire</span>
-              <span>{order.unitPrice.toFixed(2).replace('.', ',')} €</span>
+              <span>Kit de base (3 cubes)</span>
+              <span>{order.basePrice.toLocaleString('fr-FR')} {order.currency}</span>
             </div>
+            {order.extraCubes > 0 && (
+              <div className="flex justify-between text-xs text-emerald-800">
+                <span>Cubes supplémentaires ({order.extraCubes} × 10 000)</span>
+                <span>+{order.extraAmount.toLocaleString('fr-FR')} {order.currency}</span>
+              </div>
+            )}
             <div className="flex justify-between text-xs text-stone-600">
               <span>Livraison</span>
               <span className="text-emerald-700 font-medium">Offerte</span>
             </div>
             <div className="border-t border-stone-200 pt-2 flex justify-between font-bold text-stone-900">
               <span>Total à régler</span>
-              <span>{order.totalAmount.toFixed(2).replace('.', ',')} € TTC</span>
+              <span className="text-emerald-800 text-base">{order.totalAmount.toLocaleString('fr-FR')} {order.currency}</span>
             </div>
           </div>
 

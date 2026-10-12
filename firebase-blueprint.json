@@ -38,24 +38,40 @@
         "productName": {
           "type": "string",
           "description": "Name of the ordered item ('Sifteo Cubes').",
-          "enum": ["Sifteo Cubes", "Cubes interactifs", "FlipMotion"]
+          "enum": ["Sifteo Cubes", "Cubes interactifs"]
         },
-        "quantity": {
+        "baseCubes": {
           "type": "integer",
-          "description": "Number of Sifteo Cubes units ordered (between 1 and 20)."
+          "description": "Number of cubes in the base kit (3)."
         },
-        "unitPrice": {
+        "extraCubes": {
+          "type": "integer",
+          "description": "Number of additional cubes chosen by the customer (>= 0)."
+        },
+        "totalCubes": {
+          "type": "integer",
+          "description": "Total cubes ordered (baseCubes + extraCubes)."
+        },
+        "basePrice": {
           "type": "number",
-          "description": "Configured fixed price per unit in Euros (49.90 €)."
+          "description": "Base price of 3-cube kit in FCFA (35 000 FCFA)."
+        },
+        "extraCubePrice": {
+          "type": "number",
+          "description": "Price per additional cube in FCFA (10 000 FCFA)."
+        },
+        "extraAmount": {
+          "type": "number",
+          "description": "Cost of additional cubes in FCFA (extraCubes * 10 000)."
         },
         "totalAmount": {
           "type": "number",
-          "description": "Calculated total amount in Euros."
+          "description": "Calculated total order amount in FCFA (basePrice + extraAmount)."
         },
         "currency": {
           "type": "string",
-          "description": "Currency code ('EUR').",
-          "enum": ["EUR"]
+          "description": "Currency code ('FCFA').",
+          "enum": ["FCFA", "XOF"]
         },
         "status": {
           "type": "string",
@@ -75,8 +91,12 @@
         "city",
         "shippingAddress",
         "productName",
-        "quantity",
-        "unitPrice",
+        "baseCubes",
+        "extraCubes",
+        "totalCubes",
+        "basePrice",
+        "extraCubePrice",
+        "extraAmount",
         "totalAmount",
         "currency",
         "status",
@@ -89,7 +109,7 @@
       "schema": {
         "$ref": "#/entities/Order"
       },
-      "description": "Collection storing customer orders for FlipMotion with strict validation, protected from unauthorized access or modification."
+      "description": "Collection storing customer orders for Sifteo Cubes with strict validation, protected from unauthorized access or modification."
     }
   }
 }

@@ -16,6 +16,7 @@ import { testConnection, SubmittedOrder } from './lib/firebase';
 
 export default function App() {
   const [confirmedOrder, setConfirmedOrder] = useState<SubmittedOrder | null>(null);
+  const [extraCubes, setExtraCubes] = useState(0);
 
   useEffect(() => {
     testConnection();
@@ -40,6 +41,7 @@ export default function App() {
 
   const handleNewOrder = () => {
     setConfirmedOrder(null);
+    setExtraCubes(0);
     setTimeout(() => {
       const el = document.getElementById('commande');
       if (el) {
@@ -55,8 +57,12 @@ export default function App() {
 
       {/* Contenu principal */}
       <main className="flex-1">
-        {/* Grande photo réelle des cubes, présentation, prix, CTA */}
-        <Hero onOrderClick={scrollToOrder} />
+        {/* Grande photo réelle des cubes, présentation, prix, personnalisation, CTA */}
+        <Hero
+          onOrderClick={scrollToOrder}
+          extraCubes={extraCubes}
+          onExtraCubesChange={setExtraCubes}
+        />
 
         {/* Photos en fonctionnement & explication du principe du jeu */}
         <Features onOrderClick={scrollToOrder} />
@@ -66,19 +72,23 @@ export default function App() {
           {confirmedOrder ? (
             <OrderConfirmation order={confirmedOrder} onNewOrder={handleNewOrder} />
           ) : (
-            <OrderForm onOrderSuccess={handleOrderSuccess} />
+            <OrderForm
+              onOrderSuccess={handleOrderSuccess}
+              extraCubes={extraCubes}
+              onExtraCubesChange={setExtraCubes}
+            />
           )}
         </section>
 
         {/* Rappel du bouton de commande en bas de page */}
-        {!confirmedOrder && <BottomCTA onOrderClick={scrollToOrder} />}
+        {!confirmedOrder && <BottomCTA onOrderClick={scrollToOrder} extraCubes={extraCubes} />}
       </main>
 
       {/* Pied de page */}
       <Footer />
 
       {/* Bandeau de commande fixe et discret sur mobile */}
-      {!confirmedOrder && <MobileOrderBar onOrderClick={scrollToOrder} />}
+      {!confirmedOrder && <MobileOrderBar onOrderClick={scrollToOrder} extraCubes={extraCubes} />}
     </div>
   );
 }

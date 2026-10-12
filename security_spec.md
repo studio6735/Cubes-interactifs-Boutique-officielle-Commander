@@ -2,16 +2,18 @@
 
 ## 1. Data Invariants
 1. Orders must contain valid customer contact details (name, phone, country, city, shipping address).
-2. Orders must specify product as "Sifteo Cubes" (or backward compatible "Cubes interactifs" / "FlipMotion").
-3. Order quantity must be an integer between 1 and 20.
-4. Calculated unitPrice is 49.90 EUR, and totalAmount must be >= 49.90 EUR.
-5. Currency must be "EUR".
-6. Status on creation must strictly be "En attente".
-7. `createdAt` must strictly be set to the server timestamp `request.time`.
-8. Order records cannot be updated or deleted by public clients (immutable order ledger).
-9. Order records cannot be listed (`allow list: if false`) to prevent enumeration or leaking client PII (phone, names, addresses).
-10. Default deny across all other collections.
-11. Test collection `/test/connection` allows single doc read for client offline verification.
+2. Orders must specify product as "Sifteo Cubes" (or "Cubes interactifs").
+3. Mandatory base kit: `baseCubes == 3`, `basePrice == 35000`.
+4. Extra cubes: `extraCubes >= 0 && extraCubes <= 25`, `extraCubePrice == 10000`, `extraAmount == extraCubes * 10000`.
+5. Total cubes: `totalCubes == (baseCubes + extraCubes)`.
+6. Total amount: `totalAmount == (basePrice + extraAmount)` (35 000 FCFA + extraCubes * 10 000 FCFA).
+7. Currency must be "FCFA" or "XOF".
+8. Status on creation must strictly be "En attente".
+9. `createdAt` must strictly be set to the server timestamp `request.time`.
+10. Order records cannot be updated or deleted by public clients (immutable order ledger).
+11. Order records cannot be listed (`allow list: if false`) to prevent enumeration or leaking client PII (phone, names, addresses).
+12. Default deny across all other collections.
+13. Test collection `/test/connection` allows single doc read for client offline verification.
 
 ## 2. Dirty Dozen Payloads (Designed to Break Integrity & State)
 1. **Ghost Field Injection**: Payload contains required fields plus extra field `discount: 100`.

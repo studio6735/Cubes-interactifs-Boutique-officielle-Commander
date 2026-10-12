@@ -16,12 +16,15 @@ import {
 } from 'lucide-react';
 import {
   PRODUCT_INFO,
+  calculateOrderPrice,
   submitOrder,
   SubmittedOrder,
 } from '../lib/firebase';
 
 interface OrderFormProps {
   onOrderSuccess: (order: SubmittedOrder) => void;
+  extraCubes: number;
+  onExtraCubesChange: (val: number | ((prev: number) => number)) => void;
 }
 
 const COUNTRIES = [
@@ -48,21 +51,23 @@ const COUNTRIES = [
   'Autre pays (à préciser)',
 ];
 
-export const OrderForm: React.FC<OrderFormProps> = ({ onOrderSuccess }) => {
+export const OrderForm: React.FC<OrderFormProps> = ({
+  onOrderSuccess,
+  extraCubes,
+  onExtraCubesChange,
+}) => {
   const [customerName, setCustomerName] = useState('');
   const [phone, setPhone] = useState('');
   const [country, setCountry] = useState('Bénin');
   const [customCountry, setCustomCountry] = useState('');
   const [city, setCity] = useState('');
   const [shippingAddress, setShippingAddress] = useState('');
-  const [quantity, setQuantity] = useState(1);
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
-  const unitPrice = PRODUCT_INFO.unitPrice;
-  const totalAmount = Math.round(quantity * unitPrice * 100) / 100;
+  const pricing = calculateOrderPrice(extraCubes);
 
   const validate = (): boolean => {
     const newErrors: Record<string, string> = {};
@@ -97,8 +102,8 @@ export const OrderForm: React.FC<OrderFormProps> = ({ onOrderSuccess }) => {
       newErrors.shippingAddress = "L'adresse est trop longue (maximum 200 caractères).";
     }
 
-    if (quantity < 1 || quantity > 20) {
-      newErrors.quantity = 'La quantité doit être comprise entre 1 et 20.';
+    if (extraCubes < 0 || extraCubes > 25) {
+      newErrors.extraCubes = 'Le nombre de cubes supplémentaires doit être compris entre 0 et 25.';
     }
 
     setErrors(newErrors);
@@ -123,7 +128,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ onOrderSuccess }) => {
         country: resolvedCountry,
         city: city.trim(),
         shippingAddress: shippingAddress.trim(),
-        quantity,
+        extraCubes,
       });
 
       setIsSubmitting(false);
@@ -321,47 +326,64 @@ export const OrderForm: React.FC<OrderFormProps> = ({ onOrderSuccess }) => {
             )}
           </div>
 
-          {/* Row 4: Quantité */}
-          <div className="p-4 rounded-lg bg-stone-50 border border-stone-200">
+          {/* Row 4: Personnalisation de la quantité de cubes */}
+          <div className="p-4 sm:p-5 rounded-xl bg-stone-50 border border-stone-200 space-y-4">
+            {/* Kit de base */}
+            <div className="flex items-center justify-between pb-3 border-b border-stone-200">
+              <div>
+                <span className="text-sm font-semibold text-stone-900 block">
+                  Kit de base obligatoire (3 cubes)
+                </span>
+                <span className="text-xs text-stone-500">
+                  Inclus dans la commande
+                </span>
+              </div>
+              <span className="text-sm font-bold text-stone-900">
+                {PRODUCT_INFO.basePrice.toLocaleString('fr-FR')} {PRODUCT_INFO.symbol}
+              </span>
+            </div>
+
+            {/* Option cubes supplémentaires */}
             <div className="flex items-center justify-between">
               <div>
-                <span className="text-sm font-medium text-stone-900 block">
-                  Quantité souhaitée
-                </span>
-                <span className="text-xs text-stone-600">
-                  Prix : {unitPrice.toFixed(2).replace('.', ',')} € par ensemble
+                <label className="text-sm font-medium text-stone-900 block">
+                  Ajouter des cubes supplémentaires
+                </label>
+                <span className="text-xs text-stone-500">
+                  +10 000 {PRODUCT_INFO.symbol} par cube supplémentaire
                 </span>
               </div>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 bg-white p-1 rounded-lg border border-stone-300">
                 <button
                   type="button"
-                  disabled={quantity <= 1 || isSubmitting}
-                  onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                  className="cursor-pointer w-8 h-8 rounded-md bg-white border border-stone-300 hover:bg-stone-100 disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center text-stone-700 transition-colors"
-                  aria-label="Diminuer la quantité"
+                  disabled={extraCubes <= 0 || isSubmitting}
+                  onClick={() => onExtraCubesChange((prev) => Math.max(0, prev - 1))}
+                  className="cursor-pointer w-8 h-8 rounded-md bg-stone-50 border border-stone-200 hover:bg-stone-100 disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center text-stone-700 transition-colors"
+                  aria-label="Diminuer les cubes supplémentaires"
                 >
                   <Minus className="w-3.5 h-3.5" />
                 </button>
 
-                <span className="w-8 text-center font-semibold text-base text-stone-900">
-                  {quantity}
+                <span className="w-8 text-center font-bold text-base text-stone-900 select-none">
+                  {extraCubes}
                 </span>
 
                 <button
                   type="button"
-                  disabled={quantity >= 10 || isSubmitting}
-                  onClick={() => setQuantity((q) => Math.min(10, q + 1))}
-                  className="cursor-pointer w-8 h-8 rounded-md bg-white border border-stone-300 hover:bg-stone-100 disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center text-stone-700 transition-colors"
-                  aria-label="Augmenter la quantité"
+                  disabled={extraCubes >= 20 || isSubmitting}
+                  onClick={() => onExtraCubesChange((prev) => Math.min(20, prev + 1))}
+                  className="cursor-pointer w-8 h-8 rounded-md bg-stone-50 border border-stone-200 hover:bg-stone-100 disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center text-stone-700 transition-colors"
+                  aria-label="Augmenter les cubes supplémentaires"
                 >
                   <Plus className="w-3.5 h-3.5" />
                 </button>
               </div>
             </div>
-            {errors.quantity && (
-              <p className="text-xs text-red-600 mt-2 flex items-center gap-1">
-                <AlertCircle className="w-3.5 h-3.5" /> {errors.quantity}
+
+            {errors.extraCubes && (
+              <p className="text-xs text-red-600 mt-1 flex items-center gap-1">
+                <AlertCircle className="w-3.5 h-3.5" /> {errors.extraCubes}
               </p>
             )}
           </div>
@@ -371,7 +393,27 @@ export const OrderForm: React.FC<OrderFormProps> = ({ onOrderSuccess }) => {
             <div className="flex justify-between text-stone-600">
               <span>Produit :</span>
               <span className="font-medium text-stone-800">
-                {PRODUCT_INFO.name} ({quantity} {quantity > 1 ? 'ensembles' : 'ensemble'})
+                {PRODUCT_INFO.name}
+              </span>
+            </div>
+            <div className="flex justify-between text-stone-600">
+              <span>Kit de base :</span>
+              <span className="font-medium text-stone-800">
+                3 cubes ({PRODUCT_INFO.basePrice.toLocaleString('fr-FR')} {PRODUCT_INFO.symbol})
+              </span>
+            </div>
+            {extraCubes > 0 && (
+              <div className="flex justify-between text-emerald-800">
+                <span>Cubes supplémentaires ({extraCubes}) :</span>
+                <span className="font-medium">
+                  +{pricing.extraAmount.toLocaleString('fr-FR')} {PRODUCT_INFO.symbol}
+                </span>
+              </div>
+            )}
+            <div className="flex justify-between text-stone-600">
+              <span>Nombre total de cubes :</span>
+              <span className="font-semibold text-stone-900">
+                {pricing.totalCubes} cubes
               </span>
             </div>
             <div className="flex justify-between text-stone-600">
@@ -380,8 +422,8 @@ export const OrderForm: React.FC<OrderFormProps> = ({ onOrderSuccess }) => {
             </div>
             <div className="border-t border-emerald-200/70 pt-2 flex justify-between items-baseline font-bold text-stone-900 text-base">
               <span>Montant total :</span>
-              <span className="text-lg text-emerald-800">
-                {totalAmount.toFixed(2).replace('.', ',')} € TTC
+              <span className="text-xl text-emerald-800 font-extrabold">
+                {pricing.totalAmount.toLocaleString('fr-FR')} {PRODUCT_INFO.symbol}
               </span>
             </div>
           </div>
@@ -398,7 +440,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ onOrderSuccess }) => {
                 <span>Enregistrement de la commande...</span>
               </>
             ) : (
-              <span>Confirmer ma commande ({totalAmount.toFixed(2).replace('.', ',')} €)</span>
+              <span>Confirmer ma commande ({pricing.totalAmount.toLocaleString('fr-FR')} {PRODUCT_INFO.symbol})</span>
             )}
           </button>
 

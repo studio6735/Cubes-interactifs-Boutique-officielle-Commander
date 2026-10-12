@@ -31,8 +31,12 @@ service cloud.firestore {
         'city',
         'shippingAddress',
         'productName',
-        'quantity',
-        'unitPrice',
+        'baseCubes',
+        'extraCubes',
+        'totalCubes',
+        'basePrice',
+        'extraCubePrice',
+        'extraAmount',
         'totalAmount',
         'currency',
         'status',
@@ -45,8 +49,12 @@ service cloud.firestore {
         'city',
         'shippingAddress',
         'productName',
-        'quantity',
-        'unitPrice',
+        'baseCubes',
+        'extraCubes',
+        'totalCubes',
+        'basePrice',
+        'extraCubePrice',
+        'extraAmount',
         'totalAmount',
         'currency',
         'status',
@@ -67,15 +75,23 @@ service cloud.firestore {
       data.shippingAddress is string &&
       data.shippingAddress.size() >= 5 &&
       data.shippingAddress.size() <= 200 &&
-      (data.productName == 'Sifteo Cubes' || data.productName == 'Cubes interactifs' || data.productName == 'FlipMotion') &&
-      data.quantity is int &&
-      data.quantity >= 1 &&
-      data.quantity <= 20 &&
-      data.unitPrice is number &&
-      data.unitPrice == 49.90 &&
-      data.totalAmount is number &&
-      data.totalAmount >= 49.90 &&
-      data.currency == 'EUR' &&
+      (data.productName == 'Sifteo Cubes' || data.productName == 'Cubes interactifs') &&
+      data.baseCubes is int &&
+      data.baseCubes == 3 &&
+      data.extraCubes is int &&
+      data.extraCubes >= 0 &&
+      data.extraCubes <= 25 &&
+      data.totalCubes is int &&
+      data.totalCubes == (data.baseCubes + data.extraCubes) &&
+      data.basePrice is int &&
+      data.basePrice == 35000 &&
+      data.extraCubePrice is int &&
+      data.extraCubePrice == 10000 &&
+      data.extraAmount is int &&
+      data.extraAmount == (data.extraCubes * 10000) &&
+      data.totalAmount is int &&
+      data.totalAmount == (data.basePrice + data.extraAmount) &&
+      (data.currency == 'FCFA' || data.currency == 'XOF') &&
       data.status == 'En attente' &&
       data.createdAt == request.time;
     }

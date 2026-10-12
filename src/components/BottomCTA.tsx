@@ -4,13 +4,16 @@
  */
 
 import React from 'react';
-import { PRODUCT_INFO } from '../lib/firebase';
+import { PRODUCT_INFO, calculateOrderPrice } from '../lib/firebase';
 
 interface BottomCTAProps {
   onOrderClick: () => void;
+  extraCubes: number;
 }
 
-export const BottomCTA: React.FC<BottomCTAProps> = ({ onOrderClick }) => {
+export const BottomCTA: React.FC<BottomCTAProps> = ({ onOrderClick, extraCubes }) => {
+  const pricing = calculateOrderPrice(extraCubes);
+
   return (
     <section className="py-12 bg-stone-100 border-t border-stone-200">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center space-y-4">
@@ -25,7 +28,7 @@ export const BottomCTA: React.FC<BottomCTAProps> = ({ onOrderClick }) => {
             onClick={onOrderClick}
             className="cursor-pointer inline-flex items-center justify-center px-6 py-3 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-medium text-sm transition-colors shadow-sm"
           >
-            Commander Sifteo Cubes ({PRODUCT_INFO.unitPrice.toFixed(2).replace('.', ',')} €)
+            Commander {pricing.totalCubes} cubes ({pricing.totalAmount.toLocaleString('fr-FR')} {PRODUCT_INFO.symbol})
           </button>
         </div>
       </div>

@@ -4,14 +4,16 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { PRODUCT_INFO } from '../lib/firebase';
+import { PRODUCT_INFO, calculateOrderPrice } from '../lib/firebase';
 
 interface MobileOrderBarProps {
   onOrderClick: () => void;
+  extraCubes: number;
 }
 
-export const MobileOrderBar: React.FC<MobileOrderBarProps> = ({ onOrderClick }) => {
+export const MobileOrderBar: React.FC<MobileOrderBarProps> = ({ onOrderClick, extraCubes }) => {
   const [isVisible, setIsVisible] = useState(true);
+  const pricing = calculateOrderPrice(extraCubes);
 
   useEffect(() => {
     // Hide bar when the order form or confirmation is in view to prevent masking
@@ -36,10 +38,9 @@ export const MobileOrderBar: React.FC<MobileOrderBarProps> = ({ onOrderClick }) 
     <div className="fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-stone-200 px-4 py-3 sm:hidden z-30 shadow-lg transition-transform duration-200">
       <div className="flex items-center justify-between gap-3">
         <div>
-          <span className="text-xs text-stone-600 block">Sifteo Cubes</span>
+          <span className="text-xs text-stone-600 block">Sifteo Cubes ({pricing.totalCubes} cubes)</span>
           <span className="font-bold text-stone-900 text-sm">
-            {PRODUCT_INFO.unitPrice.toFixed(2).replace('.', ',')} {PRODUCT_INFO.symbol}
-            <span className="text-[10px] text-stone-600 font-normal ml-1">TTC</span>
+            {pricing.totalAmount.toLocaleString('fr-FR')} {PRODUCT_INFO.symbol}
           </span>
         </div>
 

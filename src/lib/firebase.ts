@@ -88,13 +88,23 @@ export interface OrderInput {
   country: string;
   city: string;
   shippingAddress: string;
-  quantity: number;
+  extraCubes: number;
 }
 
-export interface SubmittedOrder extends OrderInput {
+export interface SubmittedOrder {
   orderId: string;
+  customerName: string;
+  phone: string;
+  country: string;
+  city: string;
+  shippingAddress: string;
   productName: string;
-  unitPrice: number;
+  baseCubes: number;
+  extraCubes: number;
+  totalCubes: number;
+  basePrice: number;
+  extraCubePrice: number;
+  extraAmount: number;
   totalAmount: number;
   currency: string;
   status: string;
@@ -103,13 +113,36 @@ export interface SubmittedOrder extends OrderInput {
 export const PRODUCT_INFO = {
   name: 'Sifteo Cubes',
   subtitle: 'Blocs de jeu interactifs avec écrans',
-  unitPrice: 49.90,
-  currency: 'EUR',
-  symbol: '€',
+  baseCubes: 3,
+  basePrice: 35000,
+  extraCubePrice: 10000,
+  currency: 'FCFA',
+  symbol: 'FCFA',
   stockStatus: 'En stock',
   deliveryDelay: 'Expédition sous 48h - 72h',
   shippingFee: 0, // Offerte
 };
+
+export function calculateOrderPrice(extraCubes: number = 0) {
+  const safeExtra = Math.max(0, Math.min(25, Math.floor(Number(extraCubes) || 0)));
+  const baseCubes = PRODUCT_INFO.baseCubes;
+  const basePrice = PRODUCT_INFO.basePrice;
+  const extraCubePrice = PRODUCT_INFO.extraCubePrice;
+  const totalCubes = baseCubes + safeExtra;
+  const extraAmount = safeExtra * extraCubePrice;
+  const totalAmount = basePrice + extraAmount;
+
+  return {
+    baseCubes,
+    basePrice,
+    extraCubes: safeExtra,
+    extraCubePrice,
+    extraAmount,
+    totalCubes,
+    totalAmount,
+    currency: PRODUCT_INFO.currency,
+  };
+}
 
 function generateOrderId(): string {
   const chars = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ';
@@ -122,8 +155,7 @@ function generateOrderId(): string {
 
 export async function submitOrder(input: OrderInput): Promise<SubmittedOrder> {
   const orderId = generateOrderId();
-  const quantity = Math.max(1, Math.min(20, Math.floor(input.quantity)));
-  const totalAmount = Math.round(quantity * PRODUCT_INFO.unitPrice * 100) / 100;
+  const pricing = calculateOrderPrice(input.extraCubes || 0);
 
   const orderPayload = {
     customerName: input.customerName.trim(),
@@ -131,11 +163,15 @@ export async function submitOrder(input: OrderInput): Promise<SubmittedOrder> {
     country: input.country.trim(),
     city: input.city.trim(),
     shippingAddress: input.shippingAddress.trim(),
-    productName: 'Sifteo Cubes',
-    quantity,
-    unitPrice: PRODUCT_INFO.unitPrice,
-    totalAmount,
-    currency: 'EUR',
+    productName: PRODUCT_INFO.name,
+    baseCubes: pricing.baseCubes,
+    extraCubes: pricing.extraCubes,
+    totalCubes: pricing.totalCubes,
+    basePrice: pricing.basePrice,
+    extraCubePrice: pricing.extraCubePrice,
+    extraAmount: pricing.extraAmount,
+    totalAmount: pricing.totalAmount,
+    currency: PRODUCT_INFO.currency,
     status: 'En attente',
     createdAt: serverTimestamp(),
   };
@@ -152,11 +188,15 @@ export async function submitOrder(input: OrderInput): Promise<SubmittedOrder> {
       country: orderPayload.country,
       city: orderPayload.city,
       shippingAddress: orderPayload.shippingAddress,
-      quantity,
       productName: orderPayload.productName,
-      unitPrice: orderPayload.unitPrice,
-      totalAmount,
-      currency: orderPayload.currency,
+      baseCubes: pricing.baseCubes,
+      extraCubes: pricing.extraCubes,
+      totalCubes: pricing.totalCubes,
+      basePrice: pricing.basePrice,
+      extraCubePrice: pricing.extraCubePrice,
+      extraAmount: pricing.extraAmount,
+      totalAmount: pricing.totalAmount,
+      currency: pricing.currency,
       status: orderPayload.status,
     };
   } catch (error) {
