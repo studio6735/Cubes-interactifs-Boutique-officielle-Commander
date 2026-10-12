@@ -67,6 +67,46 @@ export const OrderConfirmation: React.FC<OrderConfirmationProps> = ({
           </div>
         </div>
 
+        {/* Payment CTA Card with SasPay - Placé en priorité juste sous la référence et le statut */}
+        <div className="p-5 sm:p-6 rounded-xl bg-gradient-to-br from-emerald-50 to-stone-50 border-2 border-emerald-600/30 shadow-sm space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="space-y-1">
+              <span className="text-[11px] uppercase tracking-wider font-bold text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full inline-block">
+                Paiement sécurisé en ligne
+              </span>
+              <h3 className="text-base sm:text-lg font-bold text-stone-900">
+                Régler votre commande avec SasPay
+              </h3>
+              <p className="text-xs sm:text-sm text-stone-600">
+                Montant total : <strong className="text-stone-900 font-semibold">{order.totalAmount.toLocaleString('fr-FR')} {order.currency}</strong> ({order.totalCubes} cubes)
+              </p>
+            </div>
+
+            <a
+              href={saspayUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cursor-pointer inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-900 text-white font-bold text-sm sm:text-base shadow-sm transition-all hover:shadow-md shrink-0 text-center"
+            >
+              <CreditCard className="w-4 h-4" />
+              <span>Payer ma commande</span>
+              <ExternalLink className="w-3.5 h-3.5 opacity-80" />
+            </a>
+          </div>
+
+          <div className="pt-3 border-t border-emerald-200/60 text-xs text-stone-600 space-y-1.5">
+            <div className="flex items-start gap-2">
+              <Info className="w-3.5 h-3.5 text-emerald-700 shrink-0 mt-0.5" />
+              <p>
+                <strong>Information :</strong> Sur la plateforme SasPay, renseignez le montant de votre commande (<strong>{order.totalAmount.toLocaleString('fr-FR')} {order.currency}</strong>) ainsi que votre numéro de référence (<strong>{order.orderId}</strong>) pour faciliter la validation.
+              </p>
+            </div>
+            <p className="text-[11px] text-stone-500 pl-5">
+              Le statut initial de votre commande est <strong>« {order.status} »</strong>. Il sera validé après vérification du règlement par notre équipe.
+            </p>
+          </div>
+        </div>
+
         {/* Details Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
           
@@ -111,46 +151,6 @@ export const OrderConfirmation: React.FC<OrderConfirmationProps> = ({
             </p>
           </div>
 
-        </div>
-
-        {/* Payment CTA Card with SasPay */}
-        <div className="p-5 sm:p-6 rounded-xl bg-gradient-to-br from-emerald-50 to-stone-50 border-2 border-emerald-600/30 shadow-sm space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div className="space-y-1">
-              <span className="text-[11px] uppercase tracking-wider font-bold text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full inline-block">
-                Paiement sécurisé en ligne
-              </span>
-              <h3 className="text-base sm:text-lg font-bold text-stone-900">
-                Régler votre commande avec SasPay
-              </h3>
-              <p className="text-xs sm:text-sm text-stone-600">
-                Montant total : <strong className="text-stone-900">{order.totalAmount.toLocaleString('fr-FR')} {order.currency}</strong> ({order.totalCubes} cubes)
-              </p>
-            </div>
-
-            <a
-              href={saspayUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="cursor-pointer inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-900 text-white font-bold text-sm sm:text-base shadow-sm transition-all hover:shadow-md shrink-0 text-center"
-            >
-              <CreditCard className="w-4 h-4" />
-              <span>Payer ma commande</span>
-              <ExternalLink className="w-3.5 h-3.5 opacity-80" />
-            </a>
-          </div>
-
-          <div className="pt-3 border-t border-emerald-200/60 text-xs text-stone-600 space-y-1.5">
-            <div className="flex items-start gap-2">
-              <Info className="w-3.5 h-3.5 text-emerald-700 shrink-0 mt-0.5" />
-              <p>
-                <strong>Information :</strong> Sur la plateforme SasPay, renseignez le montant de votre commande (<strong>{order.totalAmount.toLocaleString('fr-FR')} {order.currency}</strong>) ainsi que votre numéro de référence (<strong>{order.orderId}</strong>) pour faciliter la validation.
-              </p>
-            </div>
-            <p className="text-[11px] text-stone-500 pl-5">
-              Le statut initial de votre commande est <strong>« {order.status} »</strong>. Il sera validé après vérification du règlement par notre équipe.
-            </p>
-          </div>
         </div>
 
         {/* Note */}
