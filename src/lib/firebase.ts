@@ -121,6 +121,7 @@ export const PRODUCT_INFO = {
   stockStatus: 'En stock',
   deliveryDelay: 'Expédition sous 48h - 72h',
   shippingFee: 0, // Offerte
+  paymentLink: 'https://link.saspay.me/gqfggfku1zq',
 };
 
 export function calculateOrderPrice(extraCubes: number = 0) {

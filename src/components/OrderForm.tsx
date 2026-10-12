@@ -420,6 +420,10 @@ export const OrderForm: React.FC<OrderFormProps> = ({
               <span>Livraison standard :</span>
               <span className="text-emerald-700 font-medium">Offerte</span>
             </div>
+            <div className="flex justify-between text-stone-600">
+              <span>Règlement :</span>
+              <span className="text-emerald-800 font-medium">En ligne via SasPay</span>
+            </div>
             <div className="border-t border-emerald-200/70 pt-2 flex justify-between items-baseline font-bold text-stone-900 text-base">
               <span>Montant total :</span>
               <span className="text-xl text-emerald-800 font-extrabold">
@@ -440,13 +444,13 @@ export const OrderForm: React.FC<OrderFormProps> = ({
                 <span>Enregistrement de la commande...</span>
               </>
             ) : (
-              <span>Confirmer ma commande ({pricing.totalAmount.toLocaleString('fr-FR')} {PRODUCT_INFO.symbol})</span>
+              <span>Valider et passer au paiement ({pricing.totalAmount.toLocaleString('fr-FR')} {PRODUCT_INFO.symbol})</span>
             )}
           </button>
 
           <p className="text-center text-xs text-stone-600 flex items-center justify-center gap-1.5 pt-1">
             <Lock className="w-3 h-3 text-stone-600" />
-            <span>Vos informations sont transmises de manière sécurisée pour la livraison.</span>
+            <span>Vos coordonnées sont transmises en toute sécurité pour la livraison et le suivi.</span>
           </p>
 
         </form>

@@ -14,8 +14,11 @@ import {
   ArrowRight,
   Printer,
   ShieldCheck,
+  CreditCard,
+  ExternalLink,
+  Info,
 } from 'lucide-react';
-import { SubmittedOrder } from '../lib/firebase';
+import { SubmittedOrder, PRODUCT_INFO } from '../lib/firebase';
 
 interface OrderConfirmationProps {
   order: SubmittedOrder;
@@ -29,6 +32,8 @@ export const OrderConfirmation: React.FC<OrderConfirmationProps> = ({
   const handlePrint = () => {
     window.print();
   };
+
+  const saspayUrl = PRODUCT_INFO.paymentLink || 'https://link.saspay.me/gqfggfku1zq';
 
   return (
     <div id="confirmation" className="scroll-mt-20">
@@ -108,8 +113,48 @@ export const OrderConfirmation: React.FC<OrderConfirmationProps> = ({
 
         </div>
 
+        {/* Payment CTA Card with SasPay */}
+        <div className="p-5 sm:p-6 rounded-xl bg-gradient-to-br from-emerald-50 to-stone-50 border-2 border-emerald-600/30 shadow-sm space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="space-y-1">
+              <span className="text-[11px] uppercase tracking-wider font-bold text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full inline-block">
+                Paiement sécurisé en ligne
+              </span>
+              <h3 className="text-base sm:text-lg font-bold text-stone-900">
+                Régler votre commande avec SasPay
+              </h3>
+              <p className="text-xs sm:text-sm text-stone-600">
+                Montant total : <strong className="text-stone-900">{order.totalAmount.toLocaleString('fr-FR')} {order.currency}</strong> ({order.totalCubes} cubes)
+              </p>
+            </div>
+
+            <a
+              href={saspayUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cursor-pointer inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-900 text-white font-bold text-sm sm:text-base shadow-sm transition-all hover:shadow-md shrink-0 text-center"
+            >
+              <CreditCard className="w-4 h-4" />
+              <span>Payer ma commande</span>
+              <ExternalLink className="w-3.5 h-3.5 opacity-80" />
+            </a>
+          </div>
+
+          <div className="pt-3 border-t border-emerald-200/60 text-xs text-stone-600 space-y-1.5">
+            <div className="flex items-start gap-2">
+              <Info className="w-3.5 h-3.5 text-emerald-700 shrink-0 mt-0.5" />
+              <p>
+                <strong>Information :</strong> Sur la plateforme SasPay, renseignez le montant de votre commande (<strong>{order.totalAmount.toLocaleString('fr-FR')} {order.currency}</strong>) ainsi que votre numéro de référence (<strong>{order.orderId}</strong>) pour faciliter la validation.
+              </p>
+            </div>
+            <p className="text-[11px] text-stone-500 pl-5">
+              Le statut initial de votre commande est <strong>« {order.status} »</strong>. Il sera validé après vérification du règlement par notre équipe.
+            </p>
+          </div>
+        </div>
+
         {/* Note */}
-        <div className="p-3.5 rounded-lg bg-emerald-50 border border-emerald-100 text-xs text-emerald-900 flex items-start gap-2.5">
+        <div className="p-3.5 rounded-lg bg-stone-50 border border-stone-200 text-xs text-stone-700 flex items-start gap-2.5">
           <ShieldCheck className="w-4 h-4 text-emerald-700 shrink-0 mt-0.5" />
           <span>
             Notre équipe prépare la validation de votre expédition. Vous serez contacté au {order.phone} pour le suivi de votre colis.
@@ -121,7 +166,7 @@ export const OrderConfirmation: React.FC<OrderConfirmationProps> = ({
           <button
             type="button"
             onClick={onNewOrder}
-            className="cursor-pointer w-full sm:w-auto px-5 py-2.5 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-medium text-sm transition-colors flex items-center justify-center gap-2"
+            className="cursor-pointer w-full sm:w-auto px-5 py-2.5 rounded-lg bg-stone-800 hover:bg-stone-900 text-white font-medium text-sm transition-colors flex items-center justify-center gap-2"
           >
             <span>Passer une autre commande</span>
             <ArrowRight className="w-4 h-4" />
