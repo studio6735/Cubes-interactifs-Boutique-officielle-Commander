@@ -11,7 +11,6 @@ import { OrderForm } from './components/OrderForm';
 import { OrderConfirmation } from './components/OrderConfirmation';
 import { BottomCTA } from './components/BottomCTA';
 import { Footer } from './components/Footer';
-import { MobileOrderBar } from './components/MobileOrderBar';
 import { testConnection, SubmittedOrder } from './lib/firebase';
 
 export default function App() {
@@ -82,9 +81,6 @@ export default function App() {
 
       {/* Pied de page */}
       <Footer />
-
-      {/* Bandeau de commande fixe et discret sur mobile */}
-      {!confirmedOrder && <MobileOrderBar onOrderClick={scrollToOrder} extraCubes={extraCubes} />}
     </div>
   );
 }
