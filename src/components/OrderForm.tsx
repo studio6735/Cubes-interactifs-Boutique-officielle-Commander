@@ -152,7 +152,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({
             Formulaire de commande
           </span>
           <h2 className="text-xl sm:text-2xl font-bold text-stone-900">
-            Finaliser votre commande – Sifteo Cubes
+            Passez votre commande
           </h2>
           <p className="text-stone-600 text-xs sm:text-sm mt-1">
             Remplissez vos coordonnées de livraison ci-dessous. Aucun compte n'est requis.
