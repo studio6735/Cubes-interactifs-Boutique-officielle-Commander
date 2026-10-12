@@ -1,0 +1,6 @@
+# robots.txt pour Cubes Interactifs
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://cubes-interactifs-boutique-officielle-commander.pages.dev/sitemap.xml
