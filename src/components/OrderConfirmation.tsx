@@ -125,7 +125,7 @@ export const OrderConfirmation: React.FC<OrderConfirmationProps> = ({
             </div>
             {order.extraCubes > 0 && (
               <div className="flex justify-between text-xs text-emerald-800">
-                <span>Cubes supplémentaires ({order.extraCubes} × 10 000)</span>
+                <span>Cubes supplémentaires ({order.extraCubes} × {order.extraCubePrice.toLocaleString('fr-FR')})</span>
                 <span>+{order.extraAmount.toLocaleString('fr-FR')} {order.currency}</span>
               </div>
             )}

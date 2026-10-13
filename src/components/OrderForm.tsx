@@ -350,7 +350,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({
                   Ajouter des cubes supplémentaires
                 </label>
                 <span className="text-xs text-stone-500">
-                  +10 000 {PRODUCT_INFO.symbol} par cube supplémentaire
+                  +{PRODUCT_INFO.extraCubePrice.toLocaleString('fr-FR')} {PRODUCT_INFO.symbol} par cube supplémentaire
                 </span>
               </div>
 

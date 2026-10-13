@@ -81,7 +81,7 @@ export const Hero: React.FC<HeroProps> = ({ onOrderClick, extraCubes, onExtraCub
                       Ajouter des cubes supplémentaires
                     </label>
                     <span className="text-[11px] text-stone-500 block">
-                      +10 000 {PRODUCT_INFO.symbol} par cube supplémentaire
+                      +{PRODUCT_INFO.extraCubePrice.toLocaleString('fr-FR')} {PRODUCT_INFO.symbol} par cube supplémentaire
                     </span>
                   </div>
 

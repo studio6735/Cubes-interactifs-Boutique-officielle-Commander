@@ -3,10 +3,10 @@
 ## 1. Data Invariants
 1. Orders must contain valid customer contact details (name, phone, country, city, shipping address).
 2. Orders must specify product as "Sifteo Cubes" (or "Cubes interactifs").
-3. Mandatory base kit: `baseCubes == 3`, `basePrice == 35000`.
-4. Extra cubes: `extraCubes >= 0 && extraCubes <= 25`, `extraCubePrice == 10000`, `extraAmount == extraCubes * 10000`.
+3. Mandatory base kit: `baseCubes == 3`, `basePrice == 15000`.
+4. Extra cubes: `extraCubes >= 0 && extraCubes <= 25`, `extraCubePrice == 5000`, `extraAmount == extraCubes * 5000`.
 5. Total cubes: `totalCubes == (baseCubes + extraCubes)`.
-6. Total amount: `totalAmount == (basePrice + extraAmount)` (35 000 FCFA + extraCubes * 10 000 FCFA).
+6. Total amount: `totalAmount == (basePrice + extraAmount)` (15 000 FCFA + extraCubes * 5 000 FCFA).
 7. Currency must be "FCFA" or "XOF".
 8. Status on creation must strictly be "En attente".
 9. `createdAt` must strictly be set to the server timestamp `request.time`.

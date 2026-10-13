@@ -54,15 +54,15 @@
         },
         "basePrice": {
           "type": "number",
-          "description": "Base price of 3-cube kit in FCFA (35 000 FCFA)."
+          "description": "Base price of 3-cube kit in FCFA (15 000 FCFA)."
         },
         "extraCubePrice": {
           "type": "number",
-          "description": "Price per additional cube in FCFA (10 000 FCFA)."
+          "description": "Price per additional cube in FCFA (5 000 FCFA)."
         },
         "extraAmount": {
           "type": "number",
-          "description": "Cost of additional cubes in FCFA (extraCubes * 10 000)."
+          "description": "Cost of additional cubes in FCFA (extraCubes * 5 000)."
         },
         "totalAmount": {
           "type": "number",

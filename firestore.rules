@@ -84,11 +84,11 @@ service cloud.firestore {
       data.totalCubes is int &&
       data.totalCubes == (data.baseCubes + data.extraCubes) &&
       data.basePrice is int &&
-      data.basePrice == 35000 &&
+      data.basePrice == 15000 &&
       data.extraCubePrice is int &&
-      data.extraCubePrice == 10000 &&
+      data.extraCubePrice == 5000 &&
       data.extraAmount is int &&
-      data.extraAmount == (data.extraCubes * 10000) &&
+      data.extraAmount == (data.extraCubes * 5000) &&
       data.totalAmount is int &&
       data.totalAmount == (data.basePrice + data.extraAmount) &&
       (data.currency == 'FCFA' || data.currency == 'XOF') &&
